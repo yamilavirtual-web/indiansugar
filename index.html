@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎰 Conseguí tu Bono de Bienvenida</title>
+
+  <script>
+    // ════════════════════════════════════════════════════════════════
+    // CONFIGURACIÓN — ROTADOR DE 4 NÚMEROS (FAILOVER EN CALIENTE)
+    // ════════════════════════════════════════════════════════════════
+    const PIXEL_ID = '1092636143779431';
+
+    // Para desactivar o reemplazar un número caído sin tocar Meta Ads:
+    // Cambiá "activo: true" a "activo: false" o modificá el número de teléfono.
+    const WHATSAPP_NUMEROS = [
+      { telefono: '5492236934731', activo: true },
+      { telefono: '5492236940500', activo: true },
+      { telefono: '5492236938867', activo: true },
+      { telefono: '5492236941443', activo: true }
+    ];
+  </script>
+
+  <!-- META PIXEL -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', PIXEL_ID);
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1092636143779431&ev=PageView&noscript=1"/>
+  </noscript>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+      min-height: 100vh;
+      color: white;
+      padding-bottom: 90px;
+    }
+
+    .header {
+      background: linear-gradient(90deg, #1a1a2e, #0d0d1a);
+      border-bottom: 2px solid #FFD700;
+      padding: 12px 20px;
+      text-align: center;
+    }
+    .header-logo { font-size: 22px; font-weight: bold; color: #FFD700; letter-spacing: 2px; }
+    .header-sub  { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+    .hero { text-align: center; padding: 30px 20px 20px; }
+    .badge {
+      display: inline-block;
+      background: rgba(255,215,0,0.15);
+      border: 1px solid #FFD700;
+      color: #FFD700;
+      font-size: 12px; font-weight: bold;
+      padding: 5px 16px; border-radius: 20px;
+      margin-bottom: 14px; letter-spacing: 1px;
+    }
+    .hero h1 {
+      font-size: 32px; font-weight: 900;
+      line-height: 1.2; margin-bottom: 10px;
+    }
+    .hero h1 span { color: #FFD700; text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+    .hero-sub { font-size: 16px; color: #ccc; margin-bottom: 15px; }
+
+    /* CONTADOR REGRESIVO */
+    .timer-container {
+      background: rgba(255, 165, 0, 0.1);
+      border: 1px dashed #FFA500;
+      border-radius: 10px;
+      padding: 8px 15px;
+      margin: 0 20px 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #ffd27f;
+    }
+    .timer-container strong { color: #FFD700; font-size: 15px; font-family: monospace; }
+
+    @keyframes pulso {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    .bono-box {
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 0 20px 25px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(255,215,0,0.3);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      user-select: none;
+      animation: pulso 2s infinite ease-in-out;
+    }
+    .bono-box:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 14px 40px rgba(255,215,0,0.5);
+    }
+    .bono-box:active { transform: translateY(0) scale(0.98); }
+
+    .bono-titulo     { color: #1a1a2e; font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .bono-monto      { color: #1a1a2e; font-size: 68px; font-weight: 900; line-height: 1; margin: 5px 0; }
+    .bono-monto-sub  { color: #1a1a2e; font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+    .bono-desc       { color: #3a2000; font-size: 14px; }
+    .bono-cta-hint   { margin-top: 10px; font-size: 12px; color: #5a3000; font-weight: bold; letter-spacing: 0.5px; }
+
+    .beneficios { padding: 0 20px 20px; }
+    .beneficio-item {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 12px 15px; margin-bottom: 10px;
+    }
+    .beneficio-icon { font-size: 24px; min-width: 36px; text-align: center; }
+    .beneficio-texto strong { display: block; font-size: 14px; color: #FFD700; }
+    .beneficio-texto span   { font-size: 12px; color: #aaa; }
+
+    .urgencia {
+      background: rgba(255,82,82,0.1);
+      border: 1px solid rgba(255,82,82,0.3);
+      border-radius: 10px; padding: 12px 15px;
+      margin: 0 20px 20px; text-align: center;
+      font-size: 13px; color: #ff8a80;
+    }
+    .urgencia strong { color: #ff5252; }
+
+    .cta-section { padding: 0 20px 15px; }
+    .btn-whatsapp {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%; padding: 18px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white; text-decoration: none;
+      border-radius: 14px; font-size: 20px; font-weight: 900;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+      transition: all 0.2s; cursor: pointer; border: none;
+      animation: pulso 2s infinite ease-in-out;
+    }
+    .btn-whatsapp:hover  { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,211,102,0.5); }
+    .btn-whatsapp:active { transform: translateY(0); }
+    .btn-sub { text-align: center; font-size: 12px; color: #25D366; margin-top: 8px; font-weight: bold; }
+
+    /* BARRA FLOTANTE FIJA ABAJO */
+    .floating-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 15, 26, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,215,0,0.2);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      z-index: 999;
+    }
+    .floating-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; max-width: 420px; padding: 14px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white; text-decoration: none;
+      border-radius: 12px; font-size: 16px; font-weight: 900;
+      box-shadow: 0 4px 18px rgba(37,211,102,0.4);
+      cursor: pointer; border: none;
+    }
+
+    /* NOTIFICACIÓN FLOTANTE DE PRUEBA SOCIAL EN VIVO */
+    .live-toast {
+      position: fixed;
+      top: 75px;
+      left: 15px;
+      background: rgba(20, 20, 35, 0.95);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      border-left: 4px solid #FFD700;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: white;
+      z-index: 998;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s ease;
+      pointer-events: none;
+      max-width: 280px;
+    }
+    .live-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .live-toast span { color: #FFD700; font-weight: bold; }
+
+    .social-proof { padding: 15px 20px; text-align: center; }
+    .avatares { display: flex; justify-content: center; margin-bottom: 8px; }
+    .avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 2px solid #1a1a2e; margin-left: -8px;
+      font-size: 18px; display: flex; align-items: center;
+      justify-content: center; background: #333;
+    }
+    .social-texto { font-size: 13px; color: #aaa; }
+    .social-texto strong { color: #FFD700; }
+
+    .pasos { padding: 20px; }
+    .pasos-titulo { text-align: center; font-size: 16px; font-weight: bold; color: #FFD700; margin-bottom: 15px; }
+    .paso { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    .paso-num {
+      min-width: 30px; height: 30px; background: #FFD700;
+      color: #1a1a2e; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 14px;
+    }
+    .paso-texto strong { display: block; font-size: 14px; color: white; }
+    .paso-texto span   { font-size: 12px; color: #888; }
+
+    .footer {
+      text-align: center; padding: 20px;
+      font-size: 11px; color: #555;
+      border-top: 1px solid #222;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NOTIFICACIÓN FLOTANTE DINÁMICA -->
+  <div id="liveToast" class="live-toast">
+    ⚡ <span id="toastUser">Lucas M.</span> acabo de reclamar su bono de <span id="toastMonto">$6.000</span> hace un momento.
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-logo">🎰 CASINO VIP</div>
+    <div class="header-sub">Plataforma oficial de juegos</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">🔥 OFERTA LIMITADA</div>
+    <h1>Conseguí tu<br><span>Bono de Bienvenida</span></h1>
+    <p class="hero-sub">Depositá hoy y gana saldo extra</p>
+  </div>
+
+  <!-- CONTADOR REGRESIVO -->
+  <div class="timer-container">
+    ⏱️ Tu reserva expira en: <strong id="countdown">10:00</strong>
+  </div>
+
+  <!-- BONO BOX -->
+  <div class="bono-box" id="bonoBox">
+    <div class="bono-titulo">💰 Bono de bienvenida</div>
+    <div class="bono-monto">100%</div>
+    <div class="bono-monto-sub">en tu primer depósito</div>
+    <div class="bono-desc">Depositás $3.000 → jugás con $6.000</div>
+    <div class="bono-cta-hint">👆 Tocá aquí para reclamarlo</div>
+  </div>
+
+  <!-- BENEFICIOS -->
+  <div class="beneficios">
+    <div class="beneficio-item">
+      <div class="beneficio-icon">⚡</div>
+      <div class="beneficio-texto">
+        <strong>Acreditación inmediata</strong>
+        <span>Fichas en tu cuenta en minutos</span>
+      </div>
+    </div>
+    <div class="beneficio-item">
+      <div class="beneficio-icon">🎮</div>
+      <div class="beneficio-texto">
+        <strong>+500 juegos disponibles</strong>
+        <span>Slots, ruleta, blackjack y más</span>
+      </div>
+    </div>
+    <div class="beneficio-item">
+      <div class="beneficio-icon">💸</div>
+      <div class="beneficio-texto">
+        <strong>Retiros rápidos</strong>
+        <span>Transferencia en el día</span>
+      </div>
+    </div>
+    <div class="beneficio-item">
+      <div class="beneficio-icon">🔒</div>
+      <div class="beneficio-texto">
+        <strong>100% seguro</strong>
+        <span>Plataforma verificada y confiable</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- URGENCIA -->
+  <div class="urgencia">
+    ⏰ <strong>¡Quedan pocas plazas hoy!</strong><br>
+    Esta oferta vence a las 23:59 hs
+  </div>
+
+  <!-- BOTÓN WHATSAPP -->
+  <div class="cta-section">
+    <button id="btnWhatsapp" class="btn-whatsapp">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15
+              -.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075
+              -.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059
+              -.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52
+              .149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52
+              -.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51
+              -.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372
+              -.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074
+              .149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625
+              .712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413
+              .248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.505
+               A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818
+               a9.818 9.818 0 01-5.003-1.366l-.36-.214-3.724.885.916-3.619-.235-.372
+               A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12
+               12 17.42 17.42 21.818 12 21.818z"/>
+      </svg>
+      QUIERO MI BONO
+    </button>
+    <div class="btn-sub">💬 Atención por WhatsApp en menos de 2 minutos</div>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+  <div class="social-proof">
+    <div class="avatares">
+      <div class="avatar">👨</div>
+      <div class="avatar">👩</div>
+      <div class="avatar">👨</div>
+      <div class="avatar">👩</div>
+      <div class="avatar">👨</div>
+    </div>
+    <div class="social-texto">
+      <strong>+2.847 personas</strong> reclamaron su bono esta semana
+    </div>
+  </div>
+
+  <!-- PASOS -->
+  <div class="pasos">
+    <div class="pasos-titulo">📋 ¿Cómo funciona?</div>
+    <div class="paso">
+      <div class="paso-num">1</div>
+      <div class="paso-texto">
+        <strong>Escribinos por WhatsApp</strong>
+        <span>Hacé clic en cualquier botón verde o dorado</span>
+      </div>
+    </div>
+    <div class="paso">
+      <div class="paso-num">2</div>
+      <div class="paso-texto">
+        <strong>Recibís tu código de bono</strong>
+        <span>Te lo enviamos al instante</span>
+      </div>
+    </div>
+    <div class="paso">
+      <div class="paso-num">3</div>
+      <div class="paso-texto">
+        <strong>Cargás fichas y jugás</strong>
+        <span>Con tu bono del 100% activado</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BARRA FLOTANTE -->
+  <div class="floating-bar">
+    <button id="btnFloating" class="floating-btn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.855L0 24l6.335-1.505A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.366l-.36-.214-3.724.885.916-3.619-.235-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 12 17.42 17.42 21.818 12 21.818z"/>
+      </svg>
+      RECLAMAR MI BONO
+    </button>
+  </div>
+
+  <div class="footer">
+    ©️ 2025 Casino VIP · Jugá con responsabilidad · +18
+  </div>
+
+  <!-- SCRIPT PRINCIPAL CON ROTADOR DE 4 NÚMEROS -->
+  <script>
+    let yaRedirigido = false;
+
+    function generarREF() {
+      let ref = sessionStorage.getItem('casino_ref');
+      if (!ref) {
+        const numeroCorto = Math.floor(100000 + Math.random() * 900000);
+        ref = 'REF-' + numeroCorto;
+        sessionStorage.setItem('casino_ref', ref);
+      }
+      return ref;
+    }
+
+    // LÓGICA DEL ROTADOR DE 4 NÚMEROS (BALANCEO Y FAILOVER)
+    function obtenerNumeroActivo() {
+      // Filtramos solo los números que tengan "activo: true"
+      const activos = WHATSAPP_NUMEROS.filter(n => n.activo);
+      
+      if (activos.length === 0) {
+        alert("Configuración de WhatsApp en mantenimiento. Intente nuevamente en unos minutos.");
+        return null;
+      }
+
+      // Vemos si el usuario ya tiene un número asignado en esta sesión para mantener consistencia
+      let indexAsignado = sessionStorage.getItem('whatsapp_rotador_idx');
+
+      if (indexAsignado === null) {
+        // Si no tiene, buscamos el índice global actual guardado en localStorage, o arrancamos en 0
+        let globalIdx = parseInt(localStorage.getItem('rotador_global_idx') || '0');
+        
+        // Nos aseguramos de apuntar a un número que esté activo actualmente
+        indexAsignado = globalIdx % activos.length;
+        
+        // Guardamos para la siguiente visita de otro usuario el siguiente número (Round-Robin)
+        localStorage.setItem('rotador_global_idx', (globalIdx + 1) % WHATSAPP_NUMEROS.length);
+        sessionStorage.setItem('whatsapp_rotador_idx', indexAsignado);
+      }
+
+      // Retornamos el teléfono correspondiente al número activo filtrado
+      return activos[parseInt(indexAsignado) % activos.length].telefono;
+    }
+
+    function irAWhatsapp() {
+      if (yaRedirigido) return;
+      yaRedirigido = true;
+
+      const ref = generarREF();
+      const numeroSeleccionado = obtenerNumeroActivo();
+
+      if (!numeroSeleccionado) return;
+
+      // Disparar evento de Pixel oficial a Meta al instante
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', {}, { eventID: ref });
+      }
+
+      const mensaje = encodeURIComponent(
+        `Hola! Quiero mas informacion \nREF: ${ref}`
+      );
+
+      // Redirección directa al número que le tocó en el rotador
+      window.location.href = `https://api.whatsapp.com/send?phone=${numeroSeleccionado}&text=${mensaje}`;
+    }
+
+    // CONTADOR REGRESIVO (10 minutos)
+    function iniciarContador() {
+      let tiempoRestante = sessionStorage.getItem('tiempo_oferta');
+      if (!tiempoRestante) {
+        tiempoRestante = 600; 
+      } else {
+        tiempoRestante = parseInt(tiempoRestante);
+      }
+
+      const display = document.getElementById('countdown');
+      
+      const intervalo = setInterval(() => {
+        if (tiempoRestante <= 0) {
+          tiempoRestante = 600;
+        }
+        tiempoRestante--;
+        sessionStorage.setItem('tiempo_oferta', tiempoRestante);
+
+        let minutos = Math.floor(tiempoRestante / 60);
+        let segundos = tiempoRestante % 60;
+
+        display.textContent = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+      }, 1000);
+    }
+
+    // NOTIFICACIONES FLOTANTES ROTATIVAS DE PRUEBA SOCIAL
+    function iniciarToastSocial() {
+      const nombres = ["Lucas M.", "Mariana R.", "Esteban G.", "Florencia P.", "Martín L.", "Romina S."];
+      const montos = ["$6.000", "$10.000", "$4.500", "$12.000", "$8.000"];
+      const toast = document.getElementById('liveToast');
+      const txtUser = document.getElementById('toastUser');
+      const txtMonto = document.getElementById('toastMonto');
+
+      setInterval(() => {
+        const randomNombre = nombres[Math.floor(Math.random() * nombres.length)];
+        const randomMonto = montos[Math.floor(Math.random() * montos.length)];
+        
+        txtUser.textContent = randomNombre;
+        txtMonto.textContent = randomMonto;
+
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 4000);
+      }, 12000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      generarREF();
+      iniciarContador();
+      setTimeout(iniciarToastSocial, 3000);
+
+      const bonoBox     = document.getElementById('bonoBox');
+      const btnWhatsapp = document.getElementById('btnWhatsapp');
+      const btnFloating = document.getElementById('btnFloating');
+
+      btnWhatsapp.addEventListener('click', (e) => {
+        e.stopPropagation();
+        irAWhatsapp();
+      });
+
+      bonoBox.addEventListener('click', () => {
+        irAWhatsapp();
+      });
+
+      if (btnFloating) {
+        btnFloating.addEventListener('click', (e) => {
+          e.stopPropagation();
+          irAWhatsapp();
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
